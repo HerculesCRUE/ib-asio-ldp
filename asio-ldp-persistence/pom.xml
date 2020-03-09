@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>es.um.asio.ldp</groupId>
+		<artifactId>asio-ldp</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>..</relativePath>
+	</parent>
+
+	<artifactId>asio-ldp-persistence</artifactId>
+	<packaging>jar</packaging>
+	<name>UM - ASIO - asio-ldp-persistence</name>
+	<description>UM - ASIO - asio-ldp-persistence</description>
+
+    <dependencies>
+		<dependency>
+			<groupId>org.trellisldp</groupId>
+			<artifactId>trellis-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.trellisldp</groupId>
+			<artifactId>trellis-vocabulary</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-rdf-jena</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.jena</groupId>
+		    <artifactId>jena-rdfconnection</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.jena</groupId>
+		    <artifactId>jena-tdb2</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.eclipse.microprofile.config</groupId>
+		    <artifactId>microprofile-config-api</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.eclipse.microprofile.health</groupId>
+		    <artifactId>microprofile-health-api</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		</dependency>
+    </dependencies>
+
+</project>

@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>es.um.asio.ldp</groupId>
+	<artifactId>asio-ldp</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>UM - ASIO - asio-ldp</name>
+	<description>UM - ASIO - asio-ldp</description>
+
+	<properties>
+		<java.version>11</java.version>
+		<resource.delimiter>@</resource.delimiter> <!-- delimiter that doesn't clash with Spring ${} placeholders -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<dependency.check.report.dir>target/dependency-check</dependency.check.report.dir>
+		<sonar.dependencyCheck.reportPath>${dependency.check.report.dir}/dependency-check-report.xml</sonar.dependencyCheck.reportPath>
+		<sonar.dependencyCheck.htmlReportPath>${dependency.check.report.dir}/dependency-check-report.html</sonar.dependencyCheck.htmlReportPath>
+		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
+		<nvd.mirror.url>http://192.168.1.246:9082</nvd.mirror.url>
+
+		<!-- sonar -->
+		<sonar.sources>pom.xml,src/main</sonar.sources>
+		<sonar.tests></sonar.tests>
+
+		<!-- plugins -->
+		<maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+
+		<!-- dependencies -->
+		<lombok.version>1.18.10</lombok.version>
+		<trellis.version>0.10.0</trellis.version>
+		<jsonld-java.version>0.13.0</jsonld-java.version>
+		<commons-codec.version>1.14</commons-codec.version>
+		<smallrye-config.version>1.5.0</smallrye-config.version>
+		<activation-api.version>1.2.2</activation-api.version>
+		<jms-api.version>2.0.3</jms-api.version>
+		<validation-api.version>2.0.2</validation-api.version>
+		<jaxb-api.version>2.3.2</jaxb-api.version>
+		<activemq-client.version>5.15.11</activemq-client.version>
+		<jena.version>3.14.0</jena.version>
+		<slf4j.version>1.7.30</slf4j.version>
+		<commons-rdf.version>0.5.0</commons-rdf.version>
+		<microprofile-config-api.version>1.4</microprofile-config-api.version>
+		<microprofile-health-api.version>2.2</microprofile-health-api.version>
+	</properties>
+
+	<scm>
+		<url>https://git.izertis.com/universidaddemurcia/semantmurc/asio-ldp</url>
+	</scm>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+			    <groupId>com.github.jsonld-java</groupId>
+			    <artifactId>jsonld-java</artifactId>
+			    <version>${jsonld-java.version}</version>
+			    
+			    <exclusions>
+			    	<exclusion>
+			    		<groupId>org.apache.httpcomponents</groupId>
+			    		<artifactId>httpclient-osgi</artifactId>
+			    	</exclusion>
+			    	<exclusion>
+			    		<groupId>org.apache.httpcomponents</groupId>
+			    		<artifactId>httpcore-osgi</artifactId>
+			    	</exclusion>
+			    </exclusions>
+			</dependency>
+			
+			<dependency>
+			    <groupId>commons-codec</groupId>
+			    <artifactId>commons-codec</artifactId>
+			    <version>${commons-codec.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.eclipse.microprofile.config</groupId>
+			    <artifactId>microprofile-config-api</artifactId>
+			    <version>${microprofile-config-api.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.eclipse.microprofile.health</groupId>
+			    <artifactId>microprofile-health-api</artifactId>
+			    <version>${microprofile-health-api.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>io.smallrye.config</groupId>
+			    <artifactId>smallrye-config</artifactId>
+			    <version>${smallrye-config.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>jakarta.activation</groupId>
+			    <artifactId>jakarta.activation-api</artifactId>
+			    <version>${activation-api.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>jakarta.jms</groupId>
+			    <artifactId>jakarta.jms-api</artifactId>
+			    <version>${jms-api.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>jakarta.validation</groupId>
+			    <artifactId>jakarta.validation-api</artifactId>
+			    <version>${validation-api.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>jakarta.xml.bind</groupId>
+			    <artifactId>jakarta.xml.bind-api</artifactId>
+			    <version>${jaxb-api.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.activemq</groupId>
+			    <artifactId>activemq-client</artifactId>
+			    <version>${activemq-client.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.jena</groupId>
+			    <artifactId>jena-arq</artifactId>
+			    <version>${jena.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.jena</groupId>
+			    <artifactId>jena-rdfconnection</artifactId>
+			    <version>${jena.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.jena</groupId>
+			    <artifactId>jena-tdb2</artifactId>
+			    <version>${jena.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.slf4j</groupId>
+			    <artifactId>slf4j-api</artifactId>
+			    <version>${slf4j.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.commons</groupId>
+			    <artifactId>commons-rdf-api</artifactId>
+			    <version>${commons-rdf.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.apache.commons</groupId>
+			    <artifactId>commons-rdf-jena</artifactId>
+			    <version>${commons-rdf.version}</version>
+			    
+			    <exclusions>
+			    	<exclusion>
+			    		<groupId>org.apache.jena</groupId>
+			    		<artifactId>jena-osgi</artifactId>
+			    	</exclusion>
+			    	<exclusion>
+			    		<groupId>org.apache.servicemix.bundles</groupId>
+			    		<artifactId>org.apache.servicemix.bundles.xerces</artifactId>
+			    	</exclusion>
+			    </exclusions>
+			</dependency>
+		
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-constraint-rules</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-io-jena</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-api</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-http</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-app</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-cache</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-dropwizard</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-vocabulary</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-file</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-namespaces</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-audit</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-event-jackson</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-webac</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-triplestore</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-jms</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-rdfa</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-kafka</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-auth-oauth</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.trellisldp</groupId>
+				<artifactId>trellis-auth-basic</artifactId>
+				<version>${trellis.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.gif</exclude>
+					<exclude>**/*.jpg</exclude>
+					<exclude>**/*.png</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.gif</include>
+					<include>**/*.jpg</include>
+					<include>**/*.png</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.plugin.version}</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<annotationProcessorPaths>
+							<path>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok</artifactId>
+								<version>${lombok.version}</version>
+							</path>
+						</annotationProcessorPaths>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<delimiters>
+							<delimiter>@</delimiter>
+						</delimiters>
+						<useDefaultDelimiters>true</useDefaultDelimiters>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.jacoco</groupId>
+					<artifactId>jacoco-maven-plugin</artifactId>
+					<version>0.8.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.owasp</groupId>
+					<artifactId>dependency-check-maven</artifactId>
+					<version>5.2.2</version>
+					<configuration>
+						<cveUrlModified>${nvd.mirror.url}/nvdcve-1.0-modified.json.gz</cveUrlModified>
+						<cveUrlBase>${nvd.mirror.url}/nvdcve-1.0-%d.json.gz</cveUrlBase>
+						<format>ALL</format>
+						<outputDirectory>${dependency.check.report.dir}</outputDirectory>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<executions>
+					<!-- Prepares the property pointing to the JaCoCo runtime agent which 
+						is passed as VM argument when Maven the Surefire plugin is executed. -->
+					<execution>
+						<id>pre-unit-test</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<!-- Sets the path to the file which contains the execution data. -->
+							<destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
+							<!-- Sets the name of the property containing the settings for JaCoCo 
+								runtime agent. -->
+							<propertyName>surefireArgLine</propertyName>
+						</configuration>
+					</execution>
+					<!-- Ensures that the code coverage report for unit tests is created 
+						after unit tests have been run. -->
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<!-- Sets the path to the file which contains the execution data. -->
+							<dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
+							<!-- Sets the output directory for the code coverage report. -->
+							<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+
+				<configuration>
+					<!-- Sets the VM argument line used when unit tests are run. -->
+					<argLine>${surefireArgLine}</argLine>
+					<!-- Skips unit tests if the value of skip.unit.tests property is true -->
+					<skipTests>${skip.unit.tests}</skipTests>
+					<!-- Excludes integration tests when unit tests are run. -->
+					<excludes>
+						<exclude>**/IT*.java</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<!-- Ensures that both integration-test and verify goals of the Failsafe 
+						Maven plugin are executed. -->
+					<execution>
+						<id>integration-tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+						<configuration>
+							<!-- Sets the VM argument line used when integration tests are run. -->
+							<argLine>${failsafeArgLine}</argLine>
+							<!-- Skips integration tests if the value of skip.integration.tests 
+								property is true -->
+							<skipTests>${skip.integration.tests}</skipTests>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<!-- select non-aggregate reports -->
+							<report>report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+
+	<modules>
+		<module>asio-ldp-dropwizard</module>
+		<module>asio-ldp-persistence</module>
+	</modules>
+
+</project>
