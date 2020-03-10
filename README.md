@@ -82,6 +82,8 @@ Una aplicación Dropwizard dispone de su propia subclase de `io.dropwizard.Confi
 
 Será preciso también crear una clase que extendienda la clase es.um.asio.ldp.app.TrellisApplication, la cual a su vez extiende `io.dropwizard.Application<T>`, la cual tiene estará parametrizada con la clase de configuración indicada anteriormente. Esta será la clase que contenta el método `main` de la aplicación y por tanto la que hay que ejecutar para arrancar el servicio.
 
+También es necesario implementar la clase `org.trellisldp.http.core.ServiceBundler`, para definir todos los servicios que forman la aplicación Trellis. Trellis proveé una implementación `org.trellisldp.app.BaseServiceBundler` la cual se puede utilizar como base. 
+
 ## Construcción
 
 Para construir la aplicación se utiliza maven, por lo que será necesario ejecutar el siguiente comando:
