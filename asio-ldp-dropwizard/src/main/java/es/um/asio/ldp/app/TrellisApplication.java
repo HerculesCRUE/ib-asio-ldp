@@ -43,13 +43,17 @@ public class TrellisApplication extends AbstractTrellisApplication<AppConfigurat
 
         final String envConfigLocation = System.getenv(ENV_CONFIG_LOCATION);
 
+        String configurationFile;
+
         if (args.length > 0) {
-            arguments = args;
+            configurationFile = args[0];
         } else if (StringUtils.isNotBlank(envConfigLocation)) {
-            arguments = new String[] { "server", envConfigLocation };
+            configurationFile = envConfigLocation;
         } else {
-            arguments = new String[] { "server", "config-dev.yml" };
+            configurationFile = "config-dev.yml";
         }
+
+        arguments = new String[] { ARG_SERVER, configurationFile };
 
         new TrellisApplication().run(arguments);
     }
@@ -81,4 +85,9 @@ public class TrellisApplication extends AbstractTrellisApplication<AppConfigurat
      * LDP configuration file
      */
     private static final String ENV_CONFIG_LOCATION = "ASIO_LDP_CONFIG_FILE";
+
+    /**
+     * Server argument.
+     */
+    private static final String ARG_SERVER = "server";
 }
