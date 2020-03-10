@@ -116,3 +116,7 @@ Trellis necesita un fichero de configuración en formato YML, cuya ubicación pu
 - Fichero dentro del classpath con nombre `config-dev.yml`. Este fichero se ha generado para entorno de desarrollo.
 
 En cuanto a la composición del fichero de configuración, se puede tomar como base la [documentación de trellis](https://github.com/trellis-ldp/trellis/wiki/Module-Configuration).
+
+Más información:
+
+- https://github.com/trellis-ldp/trellis/wiki/App-Configuration-Guide
