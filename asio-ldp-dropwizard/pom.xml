@@ -26,6 +26,12 @@
 			<artifactId>asio-ldp-persistence</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+<!-- 		<dependency> -->
+<!-- 			<groupId>es.um.asio.ldp</groupId> -->
+<!-- 			<artifactId>asio-ldp-webac</artifactId> -->
+<!-- 			<version>${project.version}</version> -->
+<!-- 		</dependency> -->
 
 		<dependency>
 			<groupId>org.trellisldp</groupId>

@@ -33,7 +33,7 @@
 
 		<!-- dependencies -->
 		<lombok.version>1.18.10</lombok.version>
-		<trellis.version>0.10.0</trellis.version>
+		<trellis.version>0.11.1</trellis.version>
 		<jsonld-java.version>0.13.0</jsonld-java.version>
 		<commons-codec.version>1.14</commons-codec.version>
 		<smallrye-config.version>1.5.0</smallrye-config.version>
@@ -41,7 +41,7 @@
 		<jms-api.version>2.0.3</jms-api.version>
 		<validation-api.version>2.0.2</validation-api.version>
 		<jaxb-api.version>2.3.2</jaxb-api.version>
-		<activemq-client.version>5.15.11</activemq-client.version>
+		<activemq-client.version>5.15.12</activemq-client.version>
 		<jena.version>3.14.0</jena.version>
 		<slf4j.version>1.7.30</slf4j.version>
 		<commons-rdf.version>0.5.0</commons-rdf.version>
@@ -476,6 +476,7 @@
 	<modules>
 		<module>asio-ldp-dropwizard</module>
 		<module>asio-ldp-persistence</module>
+		<module>asio-ldp-webac</module>
 	</modules>
 
 </project>

@@ -17,6 +17,7 @@ import static java.util.Collections.unmodifiableSet;
 import static java.util.Optional.ofNullable;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static java.util.function.Predicate.isEqual;
+import static java.util.stream.Collectors.toSet;
 import static java.util.stream.Stream.builder;
 import static java.util.stream.Stream.concat;
 import static java.util.stream.Stream.of;
@@ -81,6 +82,7 @@ public class TriplestoreResource implements Resource {
     private final IRI identifier;
     private final RDFConnection rdfConnection;
     private final boolean includeLdpType;
+    private final Map<IRI, String> extensions = new HashMap<>();
     private final Map<IRI, RDFTerm> data = new HashMap<>();
     private final Map<IRI, Supplier<Stream<Quad>>> graphMapper = new HashMap<>();
 
@@ -88,9 +90,11 @@ public class TriplestoreResource implements Resource {
      * Create a Triplestore-based Resource.
      * @param rdfConnection the triplestore connector
      * @param identifier the identifier
+     * @param extensions a map of extensions
      * @param includeLdpType whether to include the LDP interaction model in the response
      */
-    public TriplestoreResource(final RDFConnection rdfConnection, final IRI identifier, final boolean includeLdpType) {
+    public TriplestoreResource(final RDFConnection rdfConnection, final IRI identifier,
+            final Map<String, IRI> extensions, final boolean includeLdpType) {
         this.identifier = identifier;
         this.rdfConnection = rdfConnection;
         this.includeLdpType = includeLdpType;
@@ -100,6 +104,12 @@ public class TriplestoreResource implements Resource {
         graphMapper.put(Trellis.PreferAccessControl, this::fetchAclQuads);
         graphMapper.put(LDP.PreferContainment, this::fetchContainmentQuads);
         graphMapper.put(LDP.PreferMembership, this::fetchMembershipQuads);
+
+        extensions.forEach((k, v) -> {
+            if (!graphMapper.containsKey(v)) {
+                this.extensions.put(v, k);
+            }
+        });
     }
 
     /**
@@ -110,14 +120,15 @@ public class TriplestoreResource implements Resource {
      *           The resource content is fetched on demand via the {@link #stream} method.
      * @param rdfConnection the triplestore connector
      * @param identifier the identifier
+     * @param extensions a map of extensions
      * @param includeLdpType whether to include the LDP type in the body of the RDF
      * @return a new completion stage with a {@link Resource}, if one exists
      */
     public static CompletableFuture<Resource> findResource(final RDFConnection rdfConnection, final IRI identifier,
-            final boolean includeLdpType) {
+            final Map<String, IRI> extensions, final boolean includeLdpType) {
         return supplyAsync(() -> {
             final TriplestoreResource res = new TriplestoreResource(rdfConnection, normalizeIdentifier(identifier),
-                    includeLdpType);
+                    extensions, includeLdpType);
             res.fetchData();
             if (!res.exists()) {
                 return MISSING_RESOURCE;
@@ -200,12 +211,14 @@ public class TriplestoreResource implements Resource {
 
     @Override
     public Stream<Quad> stream() {
-        return graphMapper.values().stream().flatMap(Supplier::get);
+        return concat(graphMapper.values().stream().flatMap(Supplier::get),
+                extensions.keySet().stream().flatMap(this::fetchExtensionQuads));
     }
 
     @Override
     public Stream<Quad> stream(final Collection<IRI> graphNames) {
-        return graphNames.stream().filter(graphMapper::containsKey).map(graphMapper::get).flatMap(Supplier::get);
+        return concat(graphNames.stream().filter(graphMapper::containsKey).map(graphMapper::get).flatMap(Supplier::get),
+                graphNames.stream().filter(extensions::containsKey).flatMap(this::fetchExtensionQuads));
     }
 
     @Override
@@ -250,8 +263,25 @@ public class TriplestoreResource implements Resource {
     }
 
     @Override
-    public boolean hasAcl() {
-        return fetchAclQuads().findAny().isPresent();
+    public boolean hasMetadata(final IRI graph) {
+        if (Trellis.PreferAccessControl.equals(graph)) {
+            return fetchAclQuads().findAny().isPresent();
+        } else if (Trellis.PreferAudit.equals(graph)) {
+            return fetchAuditQuads().findAny().isPresent();
+        }
+        return extensions.containsKey(graph) && fetchExtensionQuads(graph).findAny().isPresent();
+    }
+
+    @Override
+    public Set<IRI> getMetadataGraphNames() {
+        final Set<IRI> graphs = new HashSet<>(extensions.keySet().stream().filter(this::hasMetadata).collect(toSet()));
+        if (hasMetadata(Trellis.PreferAccessControl)) {
+            graphs.add(Trellis.PreferAccessControl);
+        }
+        if (hasMetadata(Trellis.PreferAudit)) {
+            graphs.add(Trellis.PreferAudit);
+        }
+        return unmodifiableSet(graphs);
     }
 
     /**
@@ -494,6 +524,10 @@ public class TriplestoreResource implements Resource {
             return builder.build();
         }
         return Stream.empty();
+    }
+
+    private Stream<Quad> fetchExtensionQuads(final IRI graphName) {
+        return fetchAllFromGraph(identifier.getIRIString() + "?ext=" + extensions.get(graphName), graphName);
     }
 
     /**

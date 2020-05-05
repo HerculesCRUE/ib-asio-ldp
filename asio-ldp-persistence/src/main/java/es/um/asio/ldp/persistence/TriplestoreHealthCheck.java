@@ -57,3 +57,4 @@ public class TriplestoreHealthCheck implements HealthCheck {
             .state(rdfConnection != null && !rdfConnection.isClosed()).build();
     }
 }
+

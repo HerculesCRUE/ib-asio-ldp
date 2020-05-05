@@ -107,7 +107,7 @@ Para el arranque de la aplicación, al generar un Uber JAR, se arranca de la for
 java -jar asio-ldp-dropwizard-${project.version}-shaded.jar
 ```
 
-## Configuracion
+## Configuración
 
 Trellis necesita un fichero de configuración en formato YML, cuya ubicación puede ser obtenida por el siguiente orden:
 
@@ -120,3 +120,15 @@ En cuanto a la composición del fichero de configuración, se puede tomar como b
 Más información:
 
 - https://github.com/trellis-ldp/trellis/wiki/App-Configuration-Guide
+
+## Configuración módulos
+
+Muchos de los módulos de los que dispone Trellis disponen de sus propias variables de configuración. Estas variables pueden ser definidas a través de variables de entorno o de sistema (con el argumento -D de Java). Esta gestión se realiza mediante Apache Tamaya, https://tamaya.incubator.apache.org/documentation/api.html
+
+## Configuración WebAC
+
+WebAC es el mecanismo que se utiliza para la realizar la autorización. Para ello utiliza ficheros en formato TTL que definen los permisos. Por defecto utiliza el fichero ubicado en `org/trellisldp/webac/defaultAcl.ttl`. Este valor puede modificarse utilizando la variable `trellis.webac.default-acl-location`, la cual puede ser definida cómo se indica en el apartado anterior (variable de sistema o de entorno).
+ 
+
+
+Más información: https://www.w3.org/wiki/WebAccessControl
