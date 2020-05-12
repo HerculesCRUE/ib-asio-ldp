@@ -33,7 +33,7 @@
 
 		<!-- dependencies -->
 		<lombok.version>1.18.10</lombok.version>
-		<trellis.version>0.11.1</trellis.version>
+		<trellis.version>0.11.2</trellis.version>
 		<jsonld-java.version>0.13.0</jsonld-java.version>
 		<commons-codec.version>1.14</commons-codec.version>
 		<smallrye-config.version>1.5.0</smallrye-config.version>
