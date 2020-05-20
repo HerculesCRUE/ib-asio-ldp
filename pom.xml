@@ -50,7 +50,7 @@
 	</properties>
 
 	<scm>
-		<url>https://git.izertis.com/universidaddemurcia/semantmurc/asio-ldp</url>
+		<url>scm:git:https://github.com/HerculesCRUE/ib-asio-ldp.git</url>
 	</scm>
 
 	<dependencyManagement>
