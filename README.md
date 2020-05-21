@@ -8,21 +8,9 @@ La plataforma está basada en el proyecto [Trellis LDP](https://www.trellisldp.o
 
 Para iniciar el entorno de desarrollo se necesita cumplir los siguientes requisitos:
 
-* OpenJDK 11 (en caso de querer JDK8: Oracle JDK 8)
+* OpenJDK 11
 * Eclipse JEE 2019-09 con plugins:
-** Lombok
-
-## Java 11
-
-La aplicación está preparada para funcionar con JDK 11. En caso de necesitar trabajar con un JDK anterior, es preciso especificar una propiedad en el POM:
-
-```xml
-<properties>
-	<java.version>1.8</java.version>
-</properties>
-```
-
-Para descargar JDK 11, se precisa utilizar openjdk, la cual se puede obtener de https://jdk.java.net/11/
+  * Lombok
 
 ## Arquitectura
 
@@ -128,7 +116,5 @@ Muchos de los módulos de los que dispone Trellis disponen de sus propias variab
 ## Configuración WebAC
 
 WebAC es el mecanismo que se utiliza para la realizar la autorización. Para ello utiliza ficheros en formato TTL que definen los permisos. Por defecto utiliza el fichero ubicado en `org/trellisldp/webac/defaultAcl.ttl`. Este valor puede modificarse utilizando la variable `trellis.webac.default-acl-location`, la cual puede ser definida cómo se indica en el apartado anterior (variable de sistema o de entorno).
- 
-
 
 Más información: https://www.w3.org/wiki/WebAccessControl
