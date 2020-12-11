@@ -1,4 +1,3 @@
-
 ![](./images/logos_feder.png)
 
 
@@ -15,6 +14,10 @@
 | Documentación  | [Manual de usuario](https://github.com/HerculesCRUE/ib-asio-docs-/blob/master/entregables_hito_1/12-An%C3%A1lisis/Manual%20de%20usuario/Manual%20de%20usuario.md)<br />[Manual de despliegue](https://github.com/HerculesCRUE/ib-asio-composeset/blob/master/README.md)<br />[Documentación técnica](https://github.com/HerculesCRUE/ib-asio-docs-/blob/master/entregables_hito_1/11-Arquitectura/ASIO_Izertis_Arquitectura.md) |
 
 # ASIO LDP
+
+|     | Master |
+| --- | ------ |
+| Quality Gate | [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=HerculesCRUE_ib-asio-ldp&metric=alert_status)](https://sonarcloud.io/dashboard?id=HerculesCRUE_ib-asio-ldp) |
 
 Plataforma Linked Data para el proyecto ASIO. 
 
