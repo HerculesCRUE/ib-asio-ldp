@@ -9,8 +9,8 @@
 | Módulo         | Plataforma Linked Data                                       |
 | Tipo           | Software                                                     |
 | Objetivo       | La plataforma está basada en el proyecto [Trellis LDP](https://www.trellisldp.org/). Se trata de un servidor LDP modular que hace incapié tanto en la escalabilidad como en estar conforme a los estándares web. |
-| Estado         | **80%** Trellis está preparado para guardar, actualizar y borrar. |
-| Próximos pasos | Realizar las modificaciones necesarias para el Hito 2        |
+| Estado         | **100%** |
+| Próximos pasos |        |
 | Documentación  | [Manual de usuario](https://github.com/HerculesCRUE/ib-asio-docs-/blob/master/entregables_hito_1/12-An%C3%A1lisis/Manual%20de%20usuario/Manual%20de%20usuario.md)<br />[Manual de despliegue](https://github.com/HerculesCRUE/ib-asio-composeset/blob/master/README.md)<br />[Documentación técnica](https://github.com/HerculesCRUE/ib-asio-docs-/blob/master/entregables_hito_1/11-Arquitectura/ASIO_Izertis_Arquitectura.md) |
 
 # ASIO LDP
