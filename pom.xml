@@ -36,7 +36,7 @@
 		<trellis.version>0.11.2</trellis.version>
 		<jsonld-java.version>0.13.0</jsonld-java.version>
 		<commons-codec.version>1.14</commons-codec.version>
-		<smallrye-config.version>1.5.0</smallrye-config.version>
+		<smallrye-config.version>1.6.2</smallrye-config.version>
 		<activation-api.version>1.2.2</activation-api.version>
 		<jms-api.version>2.0.3</jms-api.version>
 		<validation-api.version>2.0.2</validation-api.version>
